@@ -15,7 +15,11 @@ const endpointFeed = async (
       if (req.url) {
         const url = req.url
         const id = url.substring(13,url.length)
-                
+        
+        if(!id){
+            return res.status(400).json({ error: "User not found"});
+        }
+
         const user = await UserModel.findById(id);
         
         if (!user) {
