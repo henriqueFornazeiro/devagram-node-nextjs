@@ -10,21 +10,38 @@ const endpointSearch = async (
 ) => {
   try {
     if (req.method === "GET") {
-      const { filter } = req.query;
 
-      if (!filter || filter.length < 2) {
-        return res
-          .status(400)
-          .json({
-            error: "Please enter more than 2 characters for the search",
-          });
-      }
+        if (req?.query?.id) {
+            const userFound = await UserModel.findById(req?.query?.id);
 
-      const usersFound = await UserModel.find({
-        name: { $regex: filter, $options: "i" },
-      });
+            if(!userFound){
+                return res.status(400).json({ error: "User not found" });
+            }
+            
+            userFound.password = null;
 
-      return res.status(200).json(usersFound);
+            return res.status(200).json(userFound);
+
+        }else{
+
+            const { filter } = req.query;
+
+            if (!filter || filter.length < 2) {
+              return res
+                .status(400)
+                .json({
+                  error: "Please enter more than 2 characters for the search",
+                });
+            }
+      
+            const usersFound = await UserModel.find({
+              name: { $regex: filter, $options: "i" },
+            });
+            
+            return res.status(200).json(usersFound);
+
+        }
+    
     }
 
     return res.status(405).json({ error: "Method not allowed" });
