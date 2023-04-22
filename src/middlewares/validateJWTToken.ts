@@ -38,7 +38,7 @@ export const validateJWTToken =
           return res.status(401).json({ error: "Access token is not valid" });
         }
   
-        if (req.query) {
+        if (!req.query) {
           req.query = {};
         }
   
@@ -48,8 +48,6 @@ export const validateJWTToken =
       console.log(e);
       return res.status(401).json({ error: "Access token is not valid" });
     }
-
-    
 
     return handler(req, res);
 

@@ -12,16 +12,10 @@ const endpointFeed = async (
   try {
     if (req.method === "GET") {
       
-      if (req.url) {
-        const url = req.url
-        const id = url.substring(13,url.length)
+      if (req?.query?.id) {
         
-        if(!id){
-            return res.status(400).json({ error: "User not found"});
-        }
+        const user = await UserModel.findById(req?.query?.id);
 
-        const user = await UserModel.findById(id);
-        
         if (!user) {
           return res.status(400).json({ error: "User not found" });
         }
@@ -29,21 +23,20 @@ const endpointFeed = async (
         const publications = await PublicationModel.find({
           userId: user._id,
         }).sort({ date: -1 });
-       
-        return res.status(200).json(publications);
 
+        return res.status(200).json(publications);
       }
 
       return res.status(400).json({ error: "Could not get user data" });
     }
 
     return res.status(405).json({ error: "Method not allowed" });
-
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ error: "Could not get feed data: "+e });
   }
 
-  return res.status(400).json({ error: "Could not get feed data" });
+  
 };
 
 export default validateJWTToken(connectMongoDB(endpointFeed));
