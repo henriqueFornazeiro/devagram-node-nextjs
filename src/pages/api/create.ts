@@ -4,7 +4,7 @@ import type { registrationRequest } from "../../types/registrationRequest";
 import { UserModel } from "../../models/UserModel";
 import { connectMongoDB } from "../../middlewares/connectMongoDB";
 import md5 from "md5";  
-import { upload, uploadImageCosmic } from "../../../services/uploadImageCosmic";
+import { upload, uploadImageCosmic } from "../../services/uploadImageCosmic";
 import nc from "next-connect";
 
 const handler = nc()
