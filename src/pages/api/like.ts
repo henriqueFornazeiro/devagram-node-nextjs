@@ -5,7 +5,7 @@ import { validateJWTToken } from "@/middlewares/validateJWTToken";
 import { PublicationModel } from "@/models/PublicationModel";
 import { UserModel } from "@/models/UserModel";
 
-const endpointLike = async (req: NextApiRequest, res: NextApiResponse) => {
+const endpointLike = async (req: NextApiRequest, res: NextApiResponse<standardAnswer>) => {
   try {
     if (req.method === "PUT") {
       //id da publicação
@@ -36,7 +36,7 @@ const endpointLike = async (req: NextApiRequest, res: NextApiResponse) => {
         );
 
         return res.status(200).json({ message: "Successfully disliked post" });
-        
+
       } else {
         publication.likes.push(user._id);
 
