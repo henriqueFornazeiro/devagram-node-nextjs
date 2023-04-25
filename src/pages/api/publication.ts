@@ -41,6 +41,9 @@ const handler = nc()
         image: image.media.url,
         date: new Date(),
       };
+
+      user.following ++;
+      await UserModel.findByIdAndUpdate({_id : user._id}, user);
       
       await PublicationModel.create(post);
 
