@@ -25,7 +25,7 @@ const endpointComment = async (
       if (!publication) {
         return res.status(400).json({ error: "Publication not found" });
       }
-      console.log(req.body);
+      
       if (!req.body || !req.body.comment || req.body.comment.length < 2) {
         return res.status(400).json({ error: "Comment is not valid" });
       }
