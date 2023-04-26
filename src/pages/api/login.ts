@@ -5,6 +5,7 @@ import {connectMongoDB} from "../../middlewares/connectMongoDB";
 import { UserModel } from "../../models/UserModel";
 import md5 from "md5";
 import jwt from 'jsonwebtoken';
+import { CORSPolicy } from "@/middlewares/CORSPolicy";
 
 const endpointLogin = async (req: NextApiRequest, res: NextApiResponse<standardAnswer | loginResponse >) => {
 
@@ -37,4 +38,4 @@ const endpointLogin = async (req: NextApiRequest, res: NextApiResponse<standardA
   return res.status(405).json({ error: "Method not allowed" });
 };
 
-export default connectMongoDB(endpointLogin);
+export default CORSPolicy(connectMongoDB(endpointLogin));

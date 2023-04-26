@@ -5,6 +5,7 @@ import { connectMongoDB } from "../../middlewares/connectMongoDB";
 import { UserModel } from "@/models/UserModel";
 import { PublicationModel } from "@/models/PublicationModel";
 import { FollowersModel } from "@/models/FollowersModel";
+import { CORSPolicy } from "@/middlewares/CORSPolicy";
 
 const endpointFeed = async (
   req: NextApiRequest,
@@ -67,4 +68,4 @@ const endpointFeed = async (
   }
 };
 
-export default validateJWTToken(connectMongoDB(endpointFeed));
+export default CORSPolicy(validateJWTToken(connectMongoDB(endpointFeed)));

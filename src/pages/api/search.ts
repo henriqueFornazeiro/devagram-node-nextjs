@@ -3,6 +3,7 @@ import type { standardAnswer } from "../../types/standardAnswer";
 import { connectMongoDB } from "@/middlewares/connectMongoDB";
 import { validateJWTToken } from "@/middlewares/validateJWTToken";
 import { UserModel } from "@/models/UserModel";
+import { CORSPolicy } from "@/middlewares/CORSPolicy";
 
 const endpointSearch = async (
   req: NextApiRequest,
@@ -51,4 +52,4 @@ const endpointSearch = async (
   }
 };
 
-export default validateJWTToken(connectMongoDB(endpointSearch));
+export default CORSPolicy(validateJWTToken(connectMongoDB(endpointSearch)));

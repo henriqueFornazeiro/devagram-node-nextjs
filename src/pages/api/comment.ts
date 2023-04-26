@@ -4,6 +4,7 @@ import { validateJWTToken } from "@/middlewares/validateJWTToken";
 import { connectMongoDB } from "@/middlewares/connectMongoDB";
 import { UserModel } from "@/models/UserModel";
 import { PublicationModel } from "@/models/PublicationModel";
+import { CORSPolicy } from "@/middlewares/CORSPolicy";
 
 const endpointComment = async (
   req: NextApiRequest,
@@ -51,4 +52,4 @@ const endpointComment = async (
   }
 };
 
-export default validateJWTToken(connectMongoDB(endpointComment));
+export default CORSPolicy(validateJWTToken(connectMongoDB(endpointComment)));
