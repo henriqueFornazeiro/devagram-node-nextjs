@@ -7,7 +7,8 @@ export const CORSPolicy =  (handler:NextApiHandler) =>
         try {
             await NextCors(req, res, {
                 origin: "*",
-                method: ["GET", "POST", "PUT"],
+                credentials:true,
+                method: ["GET", "POST", "PUT"],                
                 optionSuccessStatus: 200
             });
 
