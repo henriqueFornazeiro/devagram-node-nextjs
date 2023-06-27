@@ -33,11 +33,10 @@ const endpointSearch = async (
             } as any;
 
             const followThisUser = await FollowersModel.find({ userId: req?.query?.userId, followedUserId: userFound._id });
-            userFound.password = null;
-
+          
             if (followThisUser && followThisUser.length > 0) {
                 user.followThisUser = true;
-            }                    
+            }                  
             
 
             return res.status(200).json(user);
