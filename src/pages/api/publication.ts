@@ -43,7 +43,7 @@ const handler = nc()
         date: new Date(),
       };
 
-      user.following ++;
+      user.publications ++;
       await UserModel.findByIdAndUpdate({_id : user._id}, user);
       
       await PublicationModel.create(post);
