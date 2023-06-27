@@ -4,6 +4,7 @@ import { connectMongoDB } from "@/middlewares/connectMongoDB";
 import { validateJWTToken } from "@/middlewares/validateJWTToken";
 import { UserModel } from "@/models/UserModel";
 import { CORSPolicy } from "@/middlewares/CORSPolicy";
+import { FollowersModel } from "@/models/FollowersModel";
 
 const endpointSearch = async (
   req: NextApiRequest,
@@ -18,10 +19,28 @@ const endpointSearch = async (
             if(!userFound){
                 return res.status(400).json({ error: "User not found" });
             }
-            
+
+            const user = {
+              password: null,
+              followThisUser: false,
+              nome: userFound.name,
+              email: userFound.email,
+              _id: userFound._id,
+              avatar: userFound.avatar,
+              seguidores: userFound.followers,
+              seguindo: userFound.following,
+              publicacoes: userFound.publications,
+            } as any;
+
+            const followThisUser = await FollowersModel.find({ userId: req?.query?.userId, followedUserId: userFound._id });
             userFound.password = null;
 
-            return res.status(200).json(userFound);
+            if (followThisUser && followThisUser.length > 0) {
+                user.followThisUser = true;
+            }                    
+            
+
+            return res.status(200).json(user);
 
         }else{
 
