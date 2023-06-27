@@ -23,13 +23,13 @@ const endpointSearch = async (
             const user = {
               password: null,
               followThisUser: false,
-              nome: userFound.name,
+              name: userFound.name,
               email: userFound.email,
               _id: userFound._id,
               avatar: userFound.avatar,
-              seguidores: userFound.followers,
-              seguindo: userFound.following,
-              publicacoes: userFound.publications,
+              followers: userFound.followers,
+              following: userFound.following,
+              publications: userFound.publications,
             } as any;
 
             const followThisUser = await FollowersModel.find({ userId: req?.query?.userId, followedUserId: userFound._id });
